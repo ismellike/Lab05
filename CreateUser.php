@@ -17,13 +17,21 @@ if($user == "")
 	exit();
 }
 
-if($mysql->query("SELECT * FROM Users WHERE user_id=".$user.";") != "")
+//check if person exists
+if($result = $mysql->query("SELECT * FROM Users"))
 {
-	echo "The user already exists in the table.";
-	exit();
+	while($row = $result->fetch_assoc())
+	{
+		if($row["user_id"] == $user)
+		{
+			echo "The user already exists.";
+			exit();
+		}
+	}
+	$result->free();
 }
 
-$mysql->query("INSERT INTO Users (user_id) VALUES (".$user.");")
-
+$mysql->query("INSERT INTO Users (user_id) VALUES ('$user')");
+echo "The User was saved into the database.";
 $mysql->close();
 ?>
