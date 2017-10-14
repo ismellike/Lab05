@@ -18,7 +18,7 @@
 			echo "<tr><th>Author</th><th>Post</th><th>Delete?</th></tr>";
 			while($row = $result->fetch_assoc())
 			{
-				echo "<tr><td>".$row["author_id"]."</td><td>".$row["content"]."</td><td><input type='checkbox' name='delete' value='".$row["post_id"]."'></td></tr>";
+				echo "<tr><td>".$row["author_id"]."</td><td>".$row["content"]."</td><td><input type='checkbox' name='delete[]' value='".$row["post_id"]."'></td></tr>";
 			}
 			echo "</table>";
 			$result->free();

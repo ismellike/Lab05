@@ -2,8 +2,7 @@
 	<head>
 		<title>Delete Posts</title>
 	</head>
-	<body>
-	<form action='DeletePost2.php' method='post'>";
+	<body>";
 				#establish connections
 			$mysql = new mysqli("mysql.eecs.ku.edu","glopez", 'P@$$word123', "glopez");
 			#check connection
@@ -12,22 +11,26 @@
 				printf('Connect failed to mysql.');
 				exit();
 			} 
-			if($result = $mysql->query("SELECT * FROM Posts"))
+			$delete = $_POST["delete"];
+			if(sizeof($delete) == 0)
 			{
-			echo "<table>";
-			echo "<tr><th>Author</th><th>Post</th><th>Delete?</th></tr>";
-			while($row = $result->fetch_assoc())
-			{
-				echo "<tr><td>".$row["author_id"]."</td><td>".$row["content"]."</td><td><input type='checkbox' name='delete' value='".$row["post_id"]."'></td></tr>";
+				printf("No posts to delete");
+				exit();
 			}
-			echo "</table>";
-			$result->free();
+			$query = "DELETE FROM Posts WHERE";
+			for($i =0; $i <sizeof($delete); $i++){
+				$query .= " post_id = '$delete[$i]'";
+				if($i < sizeof($delete) - 1)
+					$query .= " OR";
+			}
+			if($mysql->query($query)){
+				echo"The posts have been successfully deleted.";
+			}
+			else{
+			echo "$query The posts could not be deleted";
 			}
 			$mysql->close();
-			
-		echo "<input type='submit'>
-		</form>
-	</body>
+	echo"</body>
 </html>";
 ?>
 
