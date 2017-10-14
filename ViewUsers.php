@@ -9,7 +9,6 @@ if($mysql->connect_errno)
 	exit();
 }
 
-//check if person exists
 if($result = $mysql->query("SELECT * FROM Users"))
 {
 	echo "<table>";
